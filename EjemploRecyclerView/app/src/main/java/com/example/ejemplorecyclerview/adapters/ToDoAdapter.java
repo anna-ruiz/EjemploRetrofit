@@ -38,7 +38,14 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoVH> {
         //1.Creamos la vista, recibe el context/vista y las filas
         View todoView = LayoutInflater.from(context).inflate(resource, null);
 
-        //2. devolvemos la vista
+        //2. Pasamos parametros para q la card ocupe todo el ancho de la pantalla
+        RecyclerView.LayoutParams lp = new RecyclerView.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+        );
+        todoView.setLayoutParams(lp);
+
+        //3. devolvemos la vista
         return new ToDoVH(todoView);
 
     }
@@ -57,6 +64,17 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.ToDoVH> {
         }else {
             holder.btnCompletado.setImageResource(android.R.drawable.checkbox_off_background);
         }
+
+        //PARA EL BTN DEL CHECK
+        holder.btnCompletado.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Si clickea cambiamos al contrario
+                toDo.setCompletado(!toDo.isCompletado());
+                //para q vuelva a comprobar el icono o asi
+                notifyDataSetChanged();
+            }
+        });
 
     }
 
