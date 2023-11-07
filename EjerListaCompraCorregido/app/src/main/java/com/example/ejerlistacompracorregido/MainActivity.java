@@ -7,6 +7,7 @@ import com.example.ejerlistacompracorregido.adapters.ProductsAdapter;
 import com.example.ejerlistacompracorregido.modelos.Product;
 import com.google.android.material.snackbar.Snackbar;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -63,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
     private AlertDialog createProduct(){
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
 
-        builder.setTitle("Create Product");
+        builder.setTitle(R.string.createProduct);
         builder.setCancelable(false);
 
         View productViewModel = LayoutInflater.from(this).inflate(R.layout.product_view_model,null);
@@ -110,16 +111,16 @@ public class MainActivity extends AppCompatActivity {
         txtQuantity.addTextChangedListener(textWatcher);
         txtPrice.addTextChangedListener(textWatcher);
 
-        builder.setNegativeButton("Cancel",null);
+        builder.setNegativeButton(R.string.buttonCancel,null);
 
-        builder.setPositiveButton("Create", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.buttonCreate, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
                 if(txtName.getText().toString().isEmpty() ||
                 txtQuantity.getText().toString().isEmpty() ||
                 txtPrice.getText().toString().isEmpty()){
-                    Toast.makeText(MainActivity.this, "Missing Data", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, R.string.missing, Toast.LENGTH_SHORT).show();
                 }else {
                     Product product = new Product(
                             txtName.getText().toString(),
@@ -136,12 +137,23 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-
         return builder.create();
     }
 
+    //SACAMOS ESTOS 2 METODOS PARA EL RESPONSIVE los 2 PROTECTED
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable("LIST",productsList);//Guardamos la lista en el bundle
+
+    }
 
 
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        productsList.addAll((ArrayList<Product>)savedInstanceState.getSerializable("LIST"));
+        adapter.notifyItemRangeInserted(0, productsList.size());
 
-
+    }
 }

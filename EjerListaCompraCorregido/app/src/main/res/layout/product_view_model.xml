@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
-            android:hint="Name"
+            android:hint="@string/name"
             android:inputType="text" />
 
         <LinearLayout
@@ -34,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:hint="Price"
+                android:hint="@string/price"
                 android:inputType="numberDecimal" />
 
             <EditText
@@ -44,18 +44,18 @@
                 android:layout_marginEnd="10dp"
                 android:layout_weight="1"
                 android:ems="10"
-                android:hint="Quantity"
+                android:hint="@string/quantity"
                 android:inputType="numberSigned" />
 
         </LinearLayout>
 
         <TextView
             android:id="@+id/lbTotalProductViewModel"
-            android:layout_width="50dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:gravity="right"
-            android:hint="Total:" />
+            android:hint="@string/total" />
 
     </LinearLayout>
 
